@@ -1,0 +1,194 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  organizations Organization[]
+  jobs          Job[]
+  projects      Project[]
+}
+
+model Organization {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  projects Project[]
+
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  organizationId Int?
+
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  queues       Queue[]
+  jobs         Job[]
+
+  createdAt DateTime @default(now())
+}
+
+model Queue {
+  id          Int     @id @default(autoincrement())
+  name        String
+  priority    Int     @default(1)
+  concurrency Int     @default(1)
+  paused      Boolean @default(false)
+
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+
+  jobs Job[]
+
+  createdAt DateTime @default(now())
+}
+
+model Job {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  status      String @default("Pending")
+
+  attempts   Int @default(0)
+  maxRetries Int @default(3)
+
+  retryStrategy String    @default("FIXED")
+  retryDelay    Int       @default(5000)
+  nextRetryAt   DateTime?
+
+  delayUntil DateTime? // ← ADD THIS LINE
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  projectId Int?
+  project   Project? @relation(fields: [projectId], references: [id])
+
+  queueId Int?
+  queue   Queue? @relation(fields: [queueId], references: [id])
+
+  batchId Int?
+
+  batch Batch? @relation(fields: [batchId], references: [id])
+
+  executions JobExecution[]
+
+  logs JobLog[]
+
+  scheduledJob ScheduledJob?
+
+  cronJob CronJob?
+
+  createdAt DateTime @default(now())
+}
+
+model DeadLetterJob {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  reason      String
+
+  originalJobId Int
+
+  createdAt DateTime @default(now())
+}
+
+model Worker {
+  id            Int            @id @default(autoincrement())
+  name          String         @unique
+  status        String         @default("IDLE")
+  lastHeartbeat DateTime       @default(now())
+  executions    JobExecution[]
+  createdAt     DateTime       @default(now())
+  shuttingDown Boolean @default(false)
+}
+
+model JobExecution {
+  id Int @id @default(autoincrement())
+
+  jobId Int
+  job   Job @relation(fields: [jobId], references: [id])
+
+  workerId Int
+  worker   Worker @relation(fields: [workerId], references: [id])
+
+  status String
+
+  startedAt DateTime @default(now())
+
+  finishedAt DateTime?
+
+  executionTime Int?
+
+  errorMessage String?
+}
+
+model JobLog {
+  id Int @id @default(autoincrement())
+
+  jobId Int
+  job   Job @relation(fields: [jobId], references: [id])
+
+  message String
+
+  level String @default("INFO")
+
+  createdAt DateTime @default(now())
+}
+
+model ScheduledJob {
+  id Int @id @default(autoincrement())
+
+  jobId Int @unique
+  job   Job @relation(fields: [jobId], references: [id])
+
+  scheduledTime DateTime
+
+  enabled Boolean @default(true)
+
+  createdAt DateTime @default(now())
+}
+
+model CronJob {
+  id Int @id @default(autoincrement())
+
+  jobId Int @unique
+  job   Job @relation(fields: [jobId], references: [id])
+
+  cronExpression String
+
+  enabled Boolean @default(true)
+
+  createdAt DateTime @default(now())
+}
+
+model Batch {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  createdAt DateTime @default(now())
+
+  jobs Job[]
+}

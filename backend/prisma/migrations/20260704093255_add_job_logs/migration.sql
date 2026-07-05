@@ -1,0 +1,13 @@
+-- CreateTable
+CREATE TABLE "JobLog" (
+    "id" SERIAL NOT NULL,
+    "jobId" INTEGER NOT NULL,
+    "message" TEXT NOT NULL,
+    "level" TEXT NOT NULL DEFAULT 'INFO',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "JobLog_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "JobLog" ADD CONSTRAINT "JobLog_jobId_fkey" FOREIGN KEY ("jobId") REFERENCES "Job"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

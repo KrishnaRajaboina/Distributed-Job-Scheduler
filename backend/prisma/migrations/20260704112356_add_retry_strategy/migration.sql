@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Job" ADD COLUMN     "retryDelay" INTEGER NOT NULL DEFAULT 5000,
+ADD COLUMN     "retryStrategy" TEXT NOT NULL DEFAULT 'FIXED';
