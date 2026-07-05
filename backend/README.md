@@ -6,6 +6,8 @@
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748)
 ![JWT](https://img.shields.io/badge/JWT-Authentication-orange)
 ![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-success)
+![React](https://img.shields.io/badge/React-Frontend-61DAFB)
+![Axios](https://img.shields.io/badge/Axios-HTTP-blueviolet)
 
 A production-inspired **Distributed Job Scheduler** built using **Node.js, Express.js, PostgreSQL, and Prisma ORM**. The application efficiently manages background jobs using multiple workers while supporting queue management, scheduling, retries, monitoring, authentication, and execution history.
 
@@ -16,6 +18,8 @@ A production-inspired **Distributed Job Scheduler** built using **Node.js, Expre
 - Project Overview
 - Features
 - Technology Stack
+- Database
+- Frontend
 - System Architecture
 - Project Structure
 - Installation
@@ -28,7 +32,9 @@ A production-inspired **Distributed Job Scheduler** built using **Node.js, Expre
 - Job Lifecycle
 - Implemented Features
 - Screenshots
+- Testing
 - Future Enhancements
+- GitHub Repository
 - License
 - Author
 
@@ -201,9 +207,49 @@ Worker States
 
 - JWT
 
+## Frontend
+
+- React
+- Vite
+- Axios
+
+## Testing
+
+- Jest
+
 ## Documentation
 
 - Swagger (OpenAPI 3)
+
+---
+
+# Database
+
+The application uses PostgreSQL as the relational database.
+
+Prisma ORM is used for
+
+- Schema Management
+- Database Migrations
+- Type-safe Queries
+- Prisma Studio
+
+---
+
+# Frontend
+
+The frontend is developed using React and Vite.
+
+Pages include
+
+- Dashboard
+- Jobs
+- Workers
+- Queues
+- Metrics
+- Login
+
+Axios is used to communicate with backend APIs.
 
 ---
 
@@ -244,21 +290,28 @@ Worker States
 # 📂 Project Structure
 
 ```
-distributed-job-scheduler/
+Distributed-Job-Scheduler/
 
-├── config/
-├── controllers/
-├── middlewares/
-├── prisma/
-│   ├── migrations/
-│   └── schema.prisma
-├── routes/
-├── services/
-├── utils/
-├── app.js
-├── server.js
-├── package.json
-├── .env
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── middlewares/
+│   ├── prisma/
+│   ├── routes/
+│   ├── services/
+│   ├── tests/
+│   ├── package.json
+│   └── README.md
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│
+├── docs/
+├── screenshots/
+├── Architecture_Diagram.png
+├── ER_Diagram.png
 └── README.md
 ```
 
@@ -269,16 +322,26 @@ distributed-job-scheduler/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/<your-username>/distributed-job-scheduler.git
+git clone https://github.com/KrishnaRajaboina/Distributed-Job-Scheduler.git
 
-cd distributed-job-scheduler
+cd Distributed-Job-Scheduler
 ```
 
 ---
 
 ## Install Dependencies
 
+### Backend
+
 ```bash
+cd backend
+npm install
+```
+
+### Frontend
+
+```bash
+cd ../frontend
 npm install
 ```
 
@@ -289,11 +352,11 @@ npm install
 Create a `.env` file.
 
 ```env
-DATABASE_URL="postgresql://postgres:password@localhost:5432/job_scheduler"
+PORT=5000
+
+DATABASE_URL="postgresql://username:password@localhost:5432/job_scheduler"
 
 JWT_SECRET=your_secret_key
-
-PORT=5000
 ```
 
 ---
@@ -322,23 +385,35 @@ npx prisma studio
 
 # ▶️ Running the Application
 
-Development
+## Start Backend
 
 ```bash
+cd backend
 npm run dev
 ```
 
-Production
+Backend URL
+
+http://localhost:5000
+
+---
+
+## Start Frontend
 
 ```bash
-npm start
+cd frontend
+npm run dev
 ```
 
-Server URL
+Frontend URL
 
-```
-http://localhost:5000
-```
+http://localhost:5173
+
+---
+
+## Swagger Documentation
+
+http://localhost:5000/api-docs
 
 ---
 
@@ -363,9 +438,7 @@ POST /api/auth/login
 Use the JWT token
 
 ```
-Authorization
-
-Bearer YOUR_TOKEN
+Authorization: Bearer <JWT_TOKEN>
 ```
 
 ---
@@ -550,21 +623,52 @@ Dead Letter Queue
 
 # 📸 Screenshots
 
+## Dashboard
+
+![Dashboard](screenshots/Dashboard.png)
+
+---
+
 ## Swagger Documentation
 
-> Add a screenshot of `/api-docs` here.
+![Swagger](screenshots/Swagger.png)
 
 ---
 
 ## Prisma Studio
 
-> Add a screenshot of Prisma Studio here.
+![Prisma Studio](screenshots/prisma.png)
 
 ---
 
 ## PostgreSQL Database
 
-> Add a screenshot of your PostgreSQL tables here.
+![PostgreSQL](screenshots/Postgres.png)
+
+---
+
+## Jobs API
+
+![Jobs API](screenshots/jobs-api.png)
+
+---
+
+## Metrics Dashboard
+
+![Metrics API](screenshots/metrics-api.png)
+
+---
+
+# 🧪 Testing
+
+The application was tested using
+
+- Swagger UI
+- React Dashboard
+- Prisma Studio
+- PostgreSQL
+- JWT Authentication
+- REST API Testing
 
 ---
 
@@ -580,18 +684,42 @@ Dead Letter Queue
 
 ---
 
+# 🔗 GitHub Repository
+
+Repository:
+
+https://github.com/KrishnaRajaboina/Distributed-Job-Scheduler
+
+The repository contains:
+
+- Backend Source Code
+- Frontend Source Code
+- Swagger Documentation
+- Prisma Schema
+- React Dashboard
+- Architecture Diagram
+- ER Diagram
+- Design Document
+
+---
+
 # 📄 License
 
-This project was developed as part of a Backend Internship Assignment for educational purposes.
+This project was developed as part of a Backend Internship Assignment.
+
+It is intended for learning, demonstration, and evaluation purposes.
 
 ---
 
 # 👨‍💻 Author
 
-**KRISHNA RAJABOINA**
+
+**Krishna Rajaboina**
 
 Backend Internship Assignment
 
-Distributed Job Scheduler
+GitHub Repository
 
-2026
+https://github.com/KrishnaRajaboina/Distributed-Job-Scheduler
+
+Year: 2026
