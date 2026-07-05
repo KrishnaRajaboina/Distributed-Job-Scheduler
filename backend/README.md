@@ -637,25 +637,25 @@ Dead Letter Queue
 
 ## Prisma Studio
 
-![Prisma Studio](screenshots/prisma.png)
+![Prisma Studio](screenshots/Prisma.png)
 
 ---
 
 ## PostgreSQL Database
 
-![PostgreSQL](screenshots/Postgres.png)
+![PostgreSQL](screenshots/PostgreSQL.png)
 
 ---
 
 ## Jobs API
 
-![Jobs API](screenshots/jobs-api.png)
+![Jobs API](screenshots/Jobs-API.png)
 
 ---
 
 ## Metrics Dashboard
 
-![Metrics API](screenshots/metrics-api.png)
+![Metrics Dashboard](screenshots/Metrics-API.png)
 
 ---
 
